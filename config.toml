@@ -106,26 +106,26 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "Project 2 - Trump’s Approval Margins"
       subtitle = "A detailed look at changes of Donald Trump's approval margins"
-      image = "projects/trump.jpg"{height=50%}
-      url = "blogs/magna"
+      image = "projects/trump.jpg"
+      url = "projects/project2"
 
     [[params.tiles.showcase]]
       title = "Project 3 - HR Analytics"
       subtitle = "A deep exploration of IBM's employee income and relevant factors"
       image = "projects/hr.jpeg"
-      url = "blogs/ipsum"
+      url = "projects/project3"
 
     [[params.tiles.showcase]]
       title = "Project 4 - IMDB ratings"
       subtitle = "Whether the mean IMDB rating for Steven Spielberg and Tim Burton are the same or not"
       image = "projects/imdb.jpg"
-      url = "blogs/ipsum"
+      url = "projects/project4"
 
     [[params.tiles.showcase]]
       title = "Project 5 - Youth Risk Behavior Surveillance"
       subtitle = "Data from high schoolers (9th through 12th grade), to analyze health patterns"
       image = "projects/youth.jpg"
-      url = "blogs/ipsum"
+      url = "projects/project5"
     # You can make more showcases by copy and pasting the code above
 
   [params.blog]
