@@ -1,0 +1,193 @@
+---
+title: "Trump's Approval Margins"
+author: "Cathy-Yuanmeng-Gu"
+output: html_document
+---
+
+<script src="index_files/kePrint/kePrint.js"></script>
+<link href="index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>As we saw in class, fivethirtyeight.com has detailed data on <a href="https://projects.fivethirtyeight.com/trump-approval-ratings">all polls that track the president’s approval</a></p>
+<pre class="r"><code># Import approval polls data
+approval_polllist &lt;- read_csv(here::here(&#39;data&#39;, &#39;approval_polllist.csv&#39;))
+
+# Take a look at data
+glimpse(approval_polllist)</code></pre>
+<pre><code>## Rows: 15,619
+## Columns: 22
+## $ president           &lt;chr&gt; &quot;Donald Trump&quot;, &quot;Donald Trump&quot;, &quot;Donald Trump&quot;, &quot;…
+## $ subgroup            &lt;chr&gt; &quot;All polls&quot;, &quot;All polls&quot;, &quot;All polls&quot;, &quot;All polls…
+## $ modeldate           &lt;chr&gt; &quot;9/27/2020&quot;, &quot;9/27/2020&quot;, &quot;9/27/2020&quot;, &quot;9/27/2020…
+## $ startdate           &lt;chr&gt; &quot;1/20/2017&quot;, &quot;1/20/2017&quot;, &quot;1/20/2017&quot;, &quot;1/21/2017…
+## $ enddate             &lt;chr&gt; &quot;1/22/2017&quot;, &quot;1/22/2017&quot;, &quot;1/24/2017&quot;, &quot;1/23/2017…
+## $ pollster            &lt;chr&gt; &quot;Gallup&quot;, &quot;Morning Consult&quot;, &quot;Ipsos&quot;, &quot;Gallup&quot;, &quot;…
+## $ grade               &lt;chr&gt; &quot;B&quot;, &quot;B/C&quot;, &quot;B-&quot;, &quot;B&quot;, &quot;B-&quot;, &quot;C+&quot;, &quot;B+&quot;, &quot;B&quot;, &quot;C+…
+## $ samplesize          &lt;dbl&gt; 1500, 1992, 1632, 1500, 1651, 1500, 1190, 1500, 1…
+## $ population          &lt;chr&gt; &quot;a&quot;, &quot;rv&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;lv&quot;, &quot;rv&quot;, &quot;a&quot;, &quot;lv&quot;, …
+## $ weight              &lt;dbl&gt; 0.262, 0.680, 0.153, 0.243, 0.142, 0.200, 1.514, …
+## $ influence           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ approve             &lt;dbl&gt; 45.0, 46.0, 42.1, 45.0, 42.3, 57.0, 36.0, 46.0, 5…
+## $ disapprove          &lt;dbl&gt; 45.0, 37.0, 45.2, 46.0, 45.8, 43.0, 44.0, 45.0, 4…
+## $ adjusted_approve    &lt;dbl&gt; 45.7, 45.3, 43.2, 45.7, 43.4, 51.5, 37.6, 46.7, 5…
+## $ adjusted_disapprove &lt;dbl&gt; 43.6, 38.3, 43.9, 44.6, 44.5, 44.5, 42.8, 43.6, 4…
+## $ multiversions       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ tracking            &lt;lgl&gt; TRUE, NA, TRUE, TRUE, TRUE, TRUE, NA, TRUE, TRUE,…
+## $ url                 &lt;chr&gt; &quot;http://www.gallup.com/poll/201617/gallup-daily-t…
+## $ poll_id             &lt;dbl&gt; 49253, 49249, 49426, 49262, 49425, 49266, 49260, …
+## $ question_id         &lt;dbl&gt; 77265, 77261, 77599, 77274, 77598, 77278, 77272, …
+## $ createddate         &lt;chr&gt; &quot;1/23/2017&quot;, &quot;1/23/2017&quot;, &quot;3/1/2017&quot;, &quot;1/24/2017&quot;…
+## $ timestamp           &lt;chr&gt; &quot;00:45:20 27 Sep 2020&quot;, &quot;00:45:20 27 Sep 2020&quot;, &quot;…</code></pre>
+<pre class="r"><code># Use `lubridate` to fix dates, as they are given as characters
+approval_polllist_cleaned &lt;- approval_polllist %&gt;% 
+  mutate(modeldate = mdy(modeldate), 
+         startdate = mdy(startdate), 
+         enddate = mdy(enddate), 
+         createddate = mdy(createddate), 
+         timestamp = parse_date_time(timestamp, 
+                                     orders = &quot;hmsdmy&quot;))
+
+# Take a look at cleaned data 
+glimpse(approval_polllist_cleaned)</code></pre>
+<pre><code>## Rows: 15,619
+## Columns: 22
+## $ president           &lt;chr&gt; &quot;Donald Trump&quot;, &quot;Donald Trump&quot;, &quot;Donald Trump&quot;, &quot;…
+## $ subgroup            &lt;chr&gt; &quot;All polls&quot;, &quot;All polls&quot;, &quot;All polls&quot;, &quot;All polls…
+## $ modeldate           &lt;date&gt; 2020-09-27, 2020-09-27, 2020-09-27, 2020-09-27, …
+## $ startdate           &lt;date&gt; 2017-01-20, 2017-01-20, 2017-01-20, 2017-01-21, …
+## $ enddate             &lt;date&gt; 2017-01-22, 2017-01-22, 2017-01-24, 2017-01-23, …
+## $ pollster            &lt;chr&gt; &quot;Gallup&quot;, &quot;Morning Consult&quot;, &quot;Ipsos&quot;, &quot;Gallup&quot;, &quot;…
+## $ grade               &lt;chr&gt; &quot;B&quot;, &quot;B/C&quot;, &quot;B-&quot;, &quot;B&quot;, &quot;B-&quot;, &quot;C+&quot;, &quot;B+&quot;, &quot;B&quot;, &quot;C+…
+## $ samplesize          &lt;dbl&gt; 1500, 1992, 1632, 1500, 1651, 1500, 1190, 1500, 1…
+## $ population          &lt;chr&gt; &quot;a&quot;, &quot;rv&quot;, &quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;lv&quot;, &quot;rv&quot;, &quot;a&quot;, &quot;lv&quot;, …
+## $ weight              &lt;dbl&gt; 0.262, 0.680, 0.153, 0.243, 0.142, 0.200, 1.514, …
+## $ influence           &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+## $ approve             &lt;dbl&gt; 45.0, 46.0, 42.1, 45.0, 42.3, 57.0, 36.0, 46.0, 5…
+## $ disapprove          &lt;dbl&gt; 45.0, 37.0, 45.2, 46.0, 45.8, 43.0, 44.0, 45.0, 4…
+## $ adjusted_approve    &lt;dbl&gt; 45.7, 45.3, 43.2, 45.7, 43.4, 51.5, 37.6, 46.7, 5…
+## $ adjusted_disapprove &lt;dbl&gt; 43.6, 38.3, 43.9, 44.6, 44.5, 44.5, 42.8, 43.6, 4…
+## $ multiversions       &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+## $ tracking            &lt;lgl&gt; TRUE, NA, TRUE, TRUE, TRUE, TRUE, NA, TRUE, TRUE,…
+## $ url                 &lt;chr&gt; &quot;http://www.gallup.com/poll/201617/gallup-daily-t…
+## $ poll_id             &lt;dbl&gt; 49253, 49249, 49426, 49262, 49425, 49266, 49260, …
+## $ question_id         &lt;dbl&gt; 77265, 77261, 77599, 77274, 77598, 77278, 77272, …
+## $ createddate         &lt;date&gt; 2017-01-23, 2017-01-23, 2017-03-01, 2017-01-24, …
+## $ timestamp           &lt;dttm&gt; 2020-09-27 00:45:20, 2020-09-27 00:45:20, 2020-0…</code></pre>
+</div>
+<div id="create-a-plot" class="section level2">
+<h2>Create a plot</h2>
+<p>We calculate the average net approval rate for each week to see how public opinion has evolved over his presidency.</p>
+<pre class="r"><code>alpha &lt;- 0.05
+
+approval_pollist_summary &lt;- approval_polllist_cleaned %&gt;% 
+  #Keep only voters as the subgroup
+  filter(subgroup==&quot;Voters&quot;) %&gt;% 
+  mutate(week = week(enddate), year = year(enddate)) %&gt;% 
+  mutate(avg_net_approval = adjusted_approve - adjusted_disapprove, year = year(enddate)) %&gt;% 
+  group_by(week, year) %&gt;% 
+  #Calculate average net rate on a weekly basis 
+  #Definine confidence intervals
+  summarise(year = year, week = week, mean_approval = mean(avg_net_approval), lower = mean(avg_net_approval) - qt(1- alpha/2, (n() - 1))*sd(avg_net_approval)/sqrt(n()), upper = mean(avg_net_approval) + qt(1- alpha/2, (n() - 1))*sd(avg_net_approval)/sqrt(n())) %&gt;% 
+  unique(by = c(&quot;week&quot;, &quot;year&quot;)) %&gt;% 
+  arrange(year, week)
+
+#Plot the data
+trump_plot &lt;- ggplot(approval_pollist_summary, aes(x=week,y=mean_approval, color = as.factor(year))) + 
+  geom_line() + 
+  facet_wrap(~year) + 
+  geom_point() + 
+  geom_hline(yintercept=0, color = &quot;gold&quot;) +
+  geom_ribbon(aes(ymin=lower, ymax=upper), linetype=1, alpha=0.1) +
+  labs(title = &quot;Estimating Net Approval (approve-disapprove) for Donald Trump&quot;, subtitle = &quot;Weekly average of all polls&quot;, y = &quot;Average Net Approval (%)&quot;, x = &quot;Week of the year&quot;) + 
+  theme_bw() +
+  theme(legend.position=&quot;none&quot;) +
+  scale_color_manual(values = c(&quot;#FF736C&quot;,&quot;#7DAE00&quot;,&quot;#00BBBD&quot;,&quot;#C47EFF&quot;)) + 
+  scale_y_continuous(labels = scales::number_format(accuracy = 0.1, decimal.mark = &#39;.&#39;), breaks = c(7.5, 5, 2.5,0.0,-2.5, -5.0, -7.5, -10.0, -12.5, -15.0, -17.5, -20.0)) + 
+  scale_x_continuous(breaks = c(0, 13, 26, 39, 52))
+
+trump_plot</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="compare-confidence-intervals" class="section level2">
+<h2>Compare Confidence Intervals</h2>
+<p>We compare the confidence intervals for <code>week 15</code> (6-12 April 2020) and <code>week 34</code> (17-23 August 2020).</p>
+<pre class="r"><code>#print a table of related variables for further comparison
+average_per_week_15_34 &lt;- approval_pollist_summary %&gt;% 
+  filter(year == 2020, week %in% c(15,34)) %&gt;% 
+  mutate(upper_minus_lower = upper - lower) 
+
+kbl(average_per_week_15_34) %&gt;% 
+  kable_styling(full_width = F) %&gt;% 
+  kable_styling(bootstrap_options = c(&quot;striped&quot;, &quot;hover&quot;, &quot;condensed&quot;, &quot;responsive&quot;))</code></pre>
+<table class="table table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+week
+</th>
+<th style="text-align:right;">
+year
+</th>
+<th style="text-align:right;">
+mean_approval
+</th>
+<th style="text-align:right;">
+lower
+</th>
+<th style="text-align:right;">
+upper
+</th>
+<th style="text-align:right;">
+upper_minus_lower
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+-7.58
+</td>
+<td style="text-align:right;">
+-9.12
+</td>
+<td style="text-align:right;">
+-6.04
+</td>
+<td style="text-align:right;">
+3.08
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+34
+</td>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+-10.99
+</td>
+<td style="text-align:right;">
+-12.94
+</td>
+<td style="text-align:right;">
+-9.04
+</td>
+<td style="text-align:right;">
+3.90
+</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>When looking at the interval from week 15 (6-12 April 2020) to week 34 (17-23 August 2020) we can see that while the average net approval is decreasing, the 95% confidence interval is growing. The observed decline in average net approval is to be expected, as Trump’s handling of the Covid-19 pandemic has been sloppy and the U.S. becomes one of the most severe outbreaks of the virus, given poorly enforced and coordinated federal measures and weak norm compliance. The increase in the confidence interval could be due to the uncertain times right now, leading people to be more undecided and unsure about their vote.</p>
+</blockquote>
+</div>
