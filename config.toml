@@ -82,7 +82,7 @@ disqusShortname = ""
     # To change the background image on the homepage banner, replace 'banner.jpg' in
     # the 'static/img' folder.
     title = "Hi, my name is Cathy"
-    subtitle = "I'm currently a Masters in Financial Analysis student at London Busines School."
+    subtitle = "I'm currently a Masters in Financial Analysis student at London Busines School. Welcome to my website :D"
     buttonText = "Get Started"
 
 
@@ -139,7 +139,7 @@ disqusShortname = ""
   [params.two]
     enable = true
     title = "My Blogs"
-    subtitle = """Besides studying and working, my life is all about food, travel and exercises (plus self-reflection sometimes)."""
+    subtitle = """Besides studying and working, my life is all about food, travel and exercises, plus self-reflection sometimes :P"""
     buttonText = "Get Started"
     url = "blogs"
 
