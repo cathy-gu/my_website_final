@@ -94,14 +94,14 @@ disqusShortname = ""
     [[params.tiles.showcase]]
       title = "About me"
       subtitle = "A girl with passion towards work and life :)"
-      image = "pic01.jpg"
-      url = "blogs/aliquam"
+      image = "projects/cathygu.jpeg"
+      url = "projects/aboutme"
 
     [[params.tiles.showcase]]
       title = "Project 1 - Pay Discrimination"
       subtitle = "A further analysis of salaries of a multinational company, Omega Group Plc."
-      image = "pic02.jpg"
-      url = "blogs/tempus"
+      image = "..."
+      url = "..."
 
     [[params.tiles.showcase]]
       title = "Project 2 - Trump’s Approval Margins"
