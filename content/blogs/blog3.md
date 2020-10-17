@@ -3,10 +3,10 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:26:13-05:00"
-description: Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa sed magna lacinia magna pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis tempus.
+description: Walking around different countries, talking with different people, appreciating different culture is so interesting. See the world, tell the truth.
 draft: false
-image: pic08.jpg
+image: travel.jpeg
 keywords: ""
 slug: tempus
-title: Tempus
+title: Travel
 ---

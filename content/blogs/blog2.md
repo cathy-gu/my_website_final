@@ -3,10 +3,10 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:26:09-05:00"
-description: Lorem Etiam Nullam
+description: Daily exercises give me energy while extreme sports hone my will. This is the thing I will insist from born to death. 
 draft: false
-image: pic09.jpg
+image: exercise.jpeg
 keywords: ""
 slug: magna
-title: Magna
+title: Exercise
 ---
