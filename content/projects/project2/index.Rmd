@@ -99,7 +99,7 @@ trump_plot
 
 ```
 
-## Compare Confidence Intervals
+## Compare confidence intervals
 
 We compare the confidence intervals for `week 15` (6-12 April 2020) and `week 34` (17-23 August 2020). 
 
