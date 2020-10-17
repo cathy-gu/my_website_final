@@ -138,12 +138,8 @@ disqusShortname = ""
   # Section Type Two
   [params.two]
     enable = true
-    title = "Massa libero"
-    subtitle = """Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. 
-    Mauris aliquet magna magna sed nunc rhoncus pharetra. 
-    Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. 
-    Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero.
-    Mauris aliquet magna magna sed nunc rhoncus amet pharetra et feugiat tempus."""
+    title = "My Blogs"
+    subtitle = """Besides studying and working, my life is all about food, travel and exercises (plus self-reflection sometimes)."""
     buttonText = "Get Started"
     url = "blogs"
 
@@ -187,7 +183,7 @@ disqusShortname = ""
   # Footer section
   [params.footer]
     enable = true
-    copyright = "Company Name"
+    copyright = "misscathygu's world"
 
     # Uses font awesome icons
     [[params.footer.social]]
