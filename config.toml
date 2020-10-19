@@ -38,7 +38,7 @@ disqusShortname = ""
   # Navigation Section
   [params.navigation]
     title = "Cathy"
-    subtitle = "MFA'21 Student"
+    subtitle = "MFA'21 Student @ LBS"
     menu = "Menu"
     # Optional logo as brand stored in img/
     # logo = "logo.png"
@@ -68,13 +68,13 @@ disqusShortname = ""
 
     # Button Style 1
     [[params.navigation.button1]]
-      name = "Get Started"
+      name = "My Blogs"
       url = "blogs"
 
     # Button Style 2
-    [[params.navigation.button2]]
-      name = "Log In"
-      url = "#"
+#    [[params.navigation.button2]]
+#      name = "Log In"
+#      url = "#"
 
 
   # Banner section
@@ -140,7 +140,7 @@ disqusShortname = ""
     enable = true
     title = "My Blogs"
     subtitle = """Besides studying and working, my life is all about food, travel and exercises, plus self-reflection sometimes :P"""
-    buttonText = "Get Started"
+    buttonText = "Look More"
     url = "blogs"
 
 
@@ -161,7 +161,7 @@ disqusShortname = ""
     # - send a dummy email yourself to confirm your account
     # - click the confirm link in the email from www.formspree.io
     # - you're done. Happy mailing!
-    # formEmail = "example@domain.com"
+    formEmail = "yuanmengg0929@hotmail.com"
 
     # Contact Section
     # You can add multiple emails, phone numbers, or addresses
